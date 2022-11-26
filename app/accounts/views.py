@@ -3,6 +3,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from accounts.serializers import (UserSerializer,
+                                  ListUserSerializer,
                                   AuthTokenSerializer,
                                   AdminUserSerializer)
 from utils.renderers import CustomRenderer
@@ -50,7 +51,7 @@ class CreateTokenView(ObtainAuthToken):
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
     """Manage the authenticated user"""
-    serializer_class = UserSerializer
+    serializer_class = ListUserSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     renderer_classes = [CustomRenderer]
@@ -65,7 +66,7 @@ class AdminManageUserDetail(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, IsAdminUser)
     queryset = User.objects.all().order_by('-id')
-    serializer_class = UserSerializer
+    serializer_class = ListUserSerializer
     renderer_classes = [CustomRenderer]
 
 
@@ -74,5 +75,5 @@ class ListUserAPIView(generics.ListAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, IsAdminUser)
     queryset = User.objects.filter(is_superuser=False).order_by('-id')
-    serializer_class = UserSerializer
+    serializer_class = ListUserSerializer
     renderer_classes = [CustomRenderer]

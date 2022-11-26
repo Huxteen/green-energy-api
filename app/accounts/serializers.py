@@ -7,22 +7,17 @@ from transactions.serializers import RetrieveTransactionSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the user object."""
-    product = ProductSerializer(many=True, required=False)
-    transaction = RetrieveTransactionSerializer(many=True, required=False)
 
     class Meta:
         model = get_user_model()
-        read_only_fields = ('id',)
-        fields = ('id',
-                  'email',
+        fields = ('email',
+                  'id',
                   'password',
                   'first_name',
                   'last_name',
                   'phone_number',
                   'state',
                   'address',
-                  'product',
-                  'transaction',
                   )
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
@@ -40,6 +35,27 @@ class UserSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         return user
+
+
+class ListUserSerializer(serializers.ModelSerializer):
+    """Serializer for the user object."""
+    product = ProductSerializer(many=True, required=False)
+    transaction = RetrieveTransactionSerializer(many=True, required=False)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('email',
+                  'id',
+                  'password',
+                  'first_name',
+                  'last_name',
+                  'phone_number',
+                  'state',
+                  'address',
+                  'product',
+                  'transaction',
+                  )
+        extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
 
 class AuthTokenSerializer(serializers.Serializer):
@@ -70,8 +86,6 @@ class AuthTokenSerializer(serializers.Serializer):
 
 class AdminUserSerializer(serializers.ModelSerializer):
     """Serializer for the admin user object."""
-    product = ProductSerializer(many=True, required=False)
-    transaction = RetrieveTransactionSerializer(many=True, required=False)
 
     class Meta:
         model = get_user_model()
@@ -82,8 +96,6 @@ class AdminUserSerializer(serializers.ModelSerializer):
                   'phone_number',
                   'state',
                   'address',
-                  'product',
-                  'transaction',
                   )
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
