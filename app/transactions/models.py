@@ -22,7 +22,7 @@ class Transaction(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE,
                                    related_name='transaction_product_id')
     user_id = models.ForeignKey(User, on_delete=models.CASCADE,
-                                related_name='transaction_user_id')
+                                related_name='transaction')
     reference = models.CharField(max_length=255, unique=True)
     status = models.CharField(
         max_length=100,

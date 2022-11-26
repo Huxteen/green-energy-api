@@ -10,7 +10,7 @@ class Product(models.Model):
                                         decimal_places=2,
                                         default=0.00)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE,
-                                related_name='product_user_id')
+                                related_name='product')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 

@@ -1,10 +1,14 @@
 from django.contrib.auth import get_user_model, authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
+from products.serializers import ProductSerializer
+from transactions.serializers import RetrieveTransactionSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the user object."""
+    product = ProductSerializer(many=True, required=False)
+    transaction = RetrieveTransactionSerializer(many=True, required=False)
 
     class Meta:
         model = get_user_model()
@@ -17,6 +21,8 @@ class UserSerializer(serializers.ModelSerializer):
                   'phone_number',
                   'state',
                   'address',
+                  'product',
+                  'transaction',
                   )
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
@@ -64,6 +70,8 @@ class AuthTokenSerializer(serializers.Serializer):
 
 class AdminUserSerializer(serializers.ModelSerializer):
     """Serializer for the admin user object."""
+    product = ProductSerializer(many=True, required=False)
+    transaction = RetrieveTransactionSerializer(many=True, required=False)
 
     class Meta:
         model = get_user_model()
@@ -74,6 +82,8 @@ class AdminUserSerializer(serializers.ModelSerializer):
                   'phone_number',
                   'state',
                   'address',
+                  'product',
+                  'transaction',
                   )
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
