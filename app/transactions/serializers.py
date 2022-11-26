@@ -28,11 +28,13 @@ class ValidatePaymentSerializer(serializers.ModelSerializer):
                             'status',
                             'reference',
                             'payment_channel',
+                            'is_active',
                             'purchased_hour')
         fields = ('id',
                   'amount',
                   'reference',
                   'payment_channel',
+                  'is_active',
                   'purchased_hour',
                   'status')
 
